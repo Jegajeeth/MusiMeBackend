@@ -1,14 +1,12 @@
 # MusiMe
 
-####
-This is a Music application backend .net version 8 project. This application will have the music and the user management data (To store the artist and music data). For database postgerSQL have been used.
-####
+#### This is a Music application backend .net version 8 project. This application will have the music and the user management data (To store the artist and music data). PostgreSQL was used for the database.
 
 Initial steps:
 
-First create the database migration. To do that, go to the MusiMe.Infrastructure and run the following command.
+First, create the database migration. To do that, go to the MusiMe.Infrastructure and run the following command.
 
-In VSCode: open terminal and route to the MusiMe.Infrastructure directory. and run the command.
+In VSCode, open the terminal and route it to MusiMe.Infrastructure directory. and run the command.
 ```bash
 dotnet ef migration add <Migration name> --startup-project ../MusiMe/MusiMe.csproj
 ```
