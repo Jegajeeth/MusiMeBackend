@@ -6,7 +6,7 @@ Initial steps:
 
 First, create the database migration. To do that, go to the MusiMe.Infrastructure and run the following command.
 
-In VSCode, open the terminal and route it to MusiMe.Infrastructure directory. and run the command.
+In VSCode: open the terminal and route it to MusiMe.Infrastructure directory. and run the command.
 ```bash
 dotnet ef migration add <Migration name> --startup-project ../MusiMe/MusiMe.csproj
 ```
