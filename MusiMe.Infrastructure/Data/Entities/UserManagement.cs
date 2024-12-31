@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MusiMe.Common.Enums;
 
 namespace MusiMe.Infrastructure.Data.Entities
 {
@@ -13,17 +14,18 @@ namespace MusiMe.Infrastructure.Data.Entities
         public string UserName {get; set;}
         [Column("Email", TypeName = "varchar")]
         public string Email {get; set;}
-        [Column("Gemder", TypeName = "varchar")]
-        public string Gender { get; set; }
-        [Column("Chennals", TypeName = "UUID[]")]
-        public Guid[] Channels { get; set; }
+        [Column("Gender")]
+        public Gender Gender { get; set; }
+        [Column("Channels", TypeName = "UUID[]")]
+        public List<Guid> Channels { get; set; }
         [Column("IsSubscribed", TypeName = "boolean")]
         public bool? IsSubscribed {get; set; }
 
         public UserManagement(){
+            UserName = "";
             Email = "";
-            Gender = "Unknown";
-            Channels = [];
+            Gender = Gender.Unknown;
+            Channels = new();
         }
     }
 }
