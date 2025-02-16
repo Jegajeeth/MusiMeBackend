@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MusiMe.Common\MusiMe.Common.csproj" />
+    <ProjectReference Include="..\MusiMe.Domain\MusiMe.Domain.csproj" />
   </ItemGroup>
 
 </Project>
