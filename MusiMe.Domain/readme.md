@@ -1,0 +1,1 @@
+This is the domain layer. In this layer the data structure were implimented.

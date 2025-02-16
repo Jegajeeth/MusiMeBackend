@@ -1,6 +1,6 @@
 namespace MusiMe.Common.Enums
 {
-    public enum Genres
+    public enum Genre
     {
         Pop,
         Rock,

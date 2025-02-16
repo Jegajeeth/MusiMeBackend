@@ -1,0 +1,1 @@
+This is the infrastructure layer for this project. In this layer, the external system services were implimented.
