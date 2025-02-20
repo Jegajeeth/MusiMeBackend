@@ -9,6 +9,7 @@ namespace MusiMe.Domain.Model
         public string? Detail { get; set; } = string.Empty;
         public ChannelType ChannelType { get; set; }
         public int NumberOfFavours { get; set; } = 0;
+        public Guid ChannelOwner { get; set; }
        
     }
 }

@@ -24,6 +24,13 @@ namespace MusiMe.Infrastructure.Data.Context
             //     .Property(datapoints => datapoints.Id)
             //     .IsRequired(true);
             // ;
+        #region user
+            var userModelBuilder = modelBuilder.Entity<User>();
+            userModelBuilder
+                .Property(u => u.Id)
+                .IsRequired(required: true);
+        
+        #endregion user
         }
     }
 }

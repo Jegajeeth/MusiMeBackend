@@ -8,7 +8,6 @@ namespace MusiMe.Domain.Model
         public string UserName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public Gender Gender { get; set; }
-        public List<Guid> Channels { get; set; } = new();
         public bool? IsSubscribed { get; set; }
     }
 }
