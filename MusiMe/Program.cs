@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MusiMe.Infrastructure.Data.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
