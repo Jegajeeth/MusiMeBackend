@@ -8,7 +8,6 @@ namespace MusiMe.Domain.Model
         public string Title { get; set; } = string.Empty;
         public string Descriprion { get; set; } = string.Empty;
         public List<Genre> Genres { get; set; } = new();
-        public List<Author> Authors { get; set; } = new();
         public List<Guid> Playlists { get; set; } = new();
         public DateTime YearOfRelease { get; set; }
         public TimeSpan MusicLength { get; set; }
