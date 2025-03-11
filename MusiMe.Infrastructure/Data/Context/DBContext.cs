@@ -11,54 +11,58 @@ namespace MusiMe.Infrastructure.Data.Context
         public DbSet<Music> musics { get; set; }
         public DbSet<Channel> channels { get; set; }
         public DbSet<Playlist> playlists { get; set; }
-        public DbSet<CredentialManagement> credentials { get; set; }
-        public DbSet<Author> authors { get; set; }
-
+        public DbSet<Credentials> credentials { get; set; }
+        
         protected ModelBuilder? modelBuilder;
         protected override void OnModelCreating(ModelBuilder _modelBuilder)
         {
-            // foreach (var property in modelBuilder.Model.GetEntityTypes())
-            // {
-            //     property.ClrType
-            // }
-            // modelBuilder.Entity<Music>()
-            //     .Property(datapoints => datapoints.Id)
-            //     .IsRequired(true);
-            // ;
             modelBuilder = _modelBuilder;
+
+            #region credentials
+                setEntityId<Credentials>();
+                EntityTypeBuilder<Credentials> credentialsModelBuilder = modelBuilder.Entity<Credentials>();
+            #endregion credentials
+
             #region user
+                setEntityId<User>();
                 EntityTypeBuilder<User> userModelBuilder = modelBuilder.Entity<User>();
 
-                setEntityId<User>();
-        
+                userModelBuilder
+                    .HasOne(u => u.Credentials)
+                    .WithOne(c => c.User)
+                    .HasForeignKey<Credentials>(c => c.UserId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired(false);
+
+                userModelBuilder
+                    .HasOne(u => u.Channel)
+                    .WithOne(c => c.User)
+                    .HasForeignKey<Channel>(u => u.UserId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired(false);
+
             #endregion user
 
-            #region Music
-                EntityTypeBuilder<Music> musicModelBuilder = modelBuilder.Entity<Music>();
-
-                setEntityId<Music>();
-
-            #endregion Music
-
             #region Channel
-                EntityTypeBuilder<Channel> channerModelBuilder = modelBuilder.Entity<Channel>();
-
                 setEntityId<Channel>();
+
+                EntityTypeBuilder<Channel> channerModelBuilder = modelBuilder.Entity<Channel>();
 
             #endregion Channel
 
-            #region Playlist
-                EntityTypeBuilder<Playlist> playlistModelBuilder = modelBuilder.Entity<Playlist>();
+            #region Music
+                setEntityId<Music>();
 
+                EntityTypeBuilder<Music> musicModelBuilder = modelBuilder.Entity<Music>();
+
+            #endregion Music
+
+            #region Playlist
                 setEntityId<Playlist>();
+
+                EntityTypeBuilder<Playlist> playlistModelBuilder = modelBuilder.Entity<Playlist>();
                 
             #endregion Playlist
-
-            #region Author
-                EntityTypeBuilder<Author> authorModelBuilder = modelBuilder.Entity<Author>();
-
-                setEntityId<Author>();
-            #endregion Author
         }
 
         private void setEntityId<T>( bool IsRequired = true ) where T : IEntry
