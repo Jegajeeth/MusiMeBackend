@@ -2,7 +2,7 @@ using MusiMe.Domain.Interface;
 
 namespace MusiMe.Domain.Model
 {
-    public class Credentials : IEntry
+    public class Credential : IEntry
     {
         public string Email { get;set; } = string.Empty;
         public string Passward { get; set; } = string.Empty;
