@@ -8,7 +8,11 @@ namespace MusiMe.Domain.Model
         public string Title { get; set; } = string.Empty;
         public List<PlaylistType> PlaylistType { get; set; } = new();
         public DateTime CreateDate { get; set; } = DateTime.Now;
-        public Guid PlaylistOwnerId { get; set; }
         public PlaylistVisibility PlaylistVisibility { get; set; }
+
+        // nav properties
+        //channel
+        public Channel? Channel {get; set;}
+        public Guid? PlaylistOwnerId { get; set;}
     }
 }

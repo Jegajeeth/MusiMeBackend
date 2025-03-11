@@ -11,7 +11,7 @@ namespace MusiMe.Domain.Model
 
         //nav properties
         // Credentials
-        public Credentials? Credentials { get; set; }
+        public Credential? Credential { get; set; }
 
         // channel
         public Channel? Channel { get; set; }

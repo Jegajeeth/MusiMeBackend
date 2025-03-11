@@ -11,7 +11,7 @@ namespace MusiMe.Infrastructure.Data.Context
         public DbSet<Music> musics { get; set; }
         public DbSet<Channel> channels { get; set; }
         public DbSet<Playlist> playlists { get; set; }
-        public DbSet<Credentials> credentials { get; set; }
+        public DbSet<Credential> credentials { get; set; }
         
         protected ModelBuilder? modelBuilder;
         protected override void OnModelCreating(ModelBuilder _modelBuilder)
@@ -19,21 +19,23 @@ namespace MusiMe.Infrastructure.Data.Context
             modelBuilder = _modelBuilder;
 
             #region credentials
-                setEntityId<Credentials>();
-                EntityTypeBuilder<Credentials> credentialsModelBuilder = modelBuilder.Entity<Credentials>();
+                setEntityId<Credential>();
+                EntityTypeBuilder<Credential> credentialsModelBuilder = modelBuilder.Entity<Credential>();
             #endregion credentials
 
             #region user
                 setEntityId<User>();
                 EntityTypeBuilder<User> userModelBuilder = modelBuilder.Entity<User>();
 
+                // one - one relationship between the user and credentials
                 userModelBuilder
-                    .HasOne(u => u.Credentials)
+                    .HasOne(u => u.Credential)
                     .WithOne(c => c.User)
-                    .HasForeignKey<Credentials>(c => c.UserId)
+                    .HasForeignKey<Credential>(c => c.UserId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired(false);
 
+                // one - one relationship between the user and channel
                 userModelBuilder
                     .HasOne(u => u.Channel)
                     .WithOne(c => c.User)
@@ -47,6 +49,14 @@ namespace MusiMe.Infrastructure.Data.Context
                 setEntityId<Channel>();
 
                 EntityTypeBuilder<Channel> channerModelBuilder = modelBuilder.Entity<Channel>();
+
+                //one - many relationship for the channel and playlist
+                channerModelBuilder
+                    .HasMany(c => c.playlists)
+                    .WithOne(p => p.Channel)
+                    .HasForeignKey(p => p.PlaylistOwnerId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired(false);
 
             #endregion Channel
 
