@@ -8,7 +8,7 @@ namespace MusiMe.Infrastructure.Data.Context
     public class DBContext(DbContextOptions<DBContext> options) : DbContext(options)
     {
         public DbSet<User> users {get; set;}
-        public DbSet<Music> musics { get; set; }
+        public DbSet<Song> songs { get; set; }
         public DbSet<Channel> channels { get; set; }
         public DbSet<Playlist> playlists { get; set; }
         public DbSet<Credential> credentials { get; set; }
@@ -60,12 +60,12 @@ namespace MusiMe.Infrastructure.Data.Context
 
             #endregion Channel
 
-            #region Music
-                setEntityId<Music>();
+            #region Song
+                setEntityId<Song>();
 
-                EntityTypeBuilder<Music> musicModelBuilder = modelBuilder.Entity<Music>();
+                EntityTypeBuilder<Song> musicModelBuilder = modelBuilder.Entity<Song>();
 
-            #endregion Music
+            #endregion Song
 
             #region Playlist
                 setEntityId<Playlist>();
