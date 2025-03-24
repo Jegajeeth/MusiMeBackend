@@ -6,7 +6,7 @@ namespace MusiMe.Domain.Model
     public class Channel : IEntry
     {
         public string ChannelName { get; set; } = string.Empty;
-        public string? Detail { get; set; } = string.Empty;
+        public string? ChannelDescription { get; set; } = string.Empty;
         public ChannelType ChannelType { get; set; }
         public int NumberOfFavours { get; set; } = 0;
 
@@ -16,6 +16,6 @@ namespace MusiMe.Domain.Model
        public Guid UserId { get; set; }
 
        //playlist
-       public List<Playlist> playlists { get; set; } = new();
+       public List<Playlist> Playlists { get; set; } = new();
     }
 }

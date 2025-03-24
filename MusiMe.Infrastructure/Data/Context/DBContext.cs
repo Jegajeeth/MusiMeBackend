@@ -12,6 +12,7 @@ namespace MusiMe.Infrastructure.Data.Context
         public DbSet<Channel> channels { get; set; }
         public DbSet<Playlist> playlists { get; set; }
         public DbSet<Credential> credentials { get; set; }
+        public DbSet<Playlistsong> playlistsongs { get; set; }
         
         protected ModelBuilder? modelBuilder;
         protected override void OnModelCreating(ModelBuilder _modelBuilder)
@@ -52,7 +53,7 @@ namespace MusiMe.Infrastructure.Data.Context
 
                 //one - many relationship for the channel and playlist
                 channerModelBuilder
-                    .HasMany(c => c.playlists)
+                    .HasMany(c => c.Playlists)
                     .WithOne(p => p.Channel)
                     .HasForeignKey(p => p.PlaylistOwnerId)
                     .OnDelete(DeleteBehavior.Cascade)
@@ -63,7 +64,12 @@ namespace MusiMe.Infrastructure.Data.Context
             #region Song
                 setEntityId<Song>();
 
-                EntityTypeBuilder<Song> musicModelBuilder = modelBuilder.Entity<Song>();
+                EntityTypeBuilder<Song> songModelBuilder = modelBuilder.Entity<Song>();
+                songModelBuilder
+                    .HasMany(s => s.PlaylistSongs)
+                    .WithOne(ps => ps.Songs)
+                    .HasForeignKey(ps => ps.SongId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
             #endregion Song
 
@@ -71,8 +77,18 @@ namespace MusiMe.Infrastructure.Data.Context
                 setEntityId<Playlist>();
 
                 EntityTypeBuilder<Playlist> playlistModelBuilder = modelBuilder.Entity<Playlist>();
-                
+                playlistModelBuilder
+                    .HasMany(p => p.PlaylistSongs)
+                    .WithOne(ps => ps.Playlists)
+                    .HasForeignKey(ps => ps.PlaylistId)
+                    .OnDelete(DeleteBehavior.Cascade);
             #endregion Playlist
+
+            #region playlistSong
+                EntityTypeBuilder<Playlistsong> playlistsongsModelBuilder = modelBuilder.Entity<Playlistsong>();
+                playlistsongsModelBuilder
+                    .HasKey(ps => new { ps.SongId, ps.PlaylistId });
+            #endregion playlistSong
         }
 
         private void setEntityId<T>( bool IsRequired = true ) where T : IEntry
