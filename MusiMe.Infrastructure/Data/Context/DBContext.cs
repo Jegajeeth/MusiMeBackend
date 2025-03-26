@@ -21,7 +21,6 @@ namespace MusiMe.Infrastructure.Data.Context
 
             #region credentials
                 setEntityId<Credential>();
-                EntityTypeBuilder<Credential> credentialsModelBuilder = modelBuilder.Entity<Credential>();
             #endregion credentials
 
             #region user
@@ -49,10 +48,8 @@ namespace MusiMe.Infrastructure.Data.Context
             #region Channel
                 setEntityId<Channel>();
 
-                EntityTypeBuilder<Channel> channerModelBuilder = modelBuilder.Entity<Channel>();
-
                 //one - many relationship for the channel and playlist
-                channerModelBuilder
+                modelBuilder.Entity<Channel>()
                     .HasMany(c => c.Playlists)
                     .WithOne(p => p.Channel)
                     .HasForeignKey(p => p.PlaylistOwnerId)
@@ -64,8 +61,7 @@ namespace MusiMe.Infrastructure.Data.Context
             #region Song
                 setEntityId<Song>();
 
-                EntityTypeBuilder<Song> songModelBuilder = modelBuilder.Entity<Song>();
-                songModelBuilder
+                 modelBuilder.Entity<Song>()
                     .HasMany(s => s.PlaylistSongs)
                     .WithOne(ps => ps.Songs)
                     .HasForeignKey(ps => ps.SongId)
@@ -76,8 +72,7 @@ namespace MusiMe.Infrastructure.Data.Context
             #region Playlist
                 setEntityId<Playlist>();
 
-                EntityTypeBuilder<Playlist> playlistModelBuilder = modelBuilder.Entity<Playlist>();
-                playlistModelBuilder
+                 modelBuilder.Entity<Playlist>()
                     .HasMany(p => p.PlaylistSongs)
                     .WithOne(ps => ps.Playlists)
                     .HasForeignKey(ps => ps.PlaylistId)
@@ -85,9 +80,8 @@ namespace MusiMe.Infrastructure.Data.Context
             #endregion Playlist
 
             #region playlistSong
-                EntityTypeBuilder<Playlistsong> playlistsongsModelBuilder = modelBuilder.Entity<Playlistsong>();
-                playlistsongsModelBuilder
-                    .HasKey(ps => new { ps.SongId, ps.PlaylistId });
+            modelBuilder.Entity<Playlistsong>()
+                .HasKey(ps => new { ps.SongId, ps.PlaylistId });
             #endregion playlistSong
         }
 
