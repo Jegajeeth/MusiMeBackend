@@ -1,10 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\MusiMe\MusiMe.csproj" />
     <ProjectReference Include="..\MusiMe.Common\MusiMe.Common.csproj" />
     <ProjectReference Include="..\MusiMe.Domain\MusiMe.Domain.csproj" />
     <ProjectReference Include="..\MusiMe.Infrastructure\MusiMe.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.5.0" />
   </ItemGroup>
 
   <PropertyGroup>

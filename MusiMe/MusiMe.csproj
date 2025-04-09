@@ -2,9 +2,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MusiMe.Infrastructure\MusiMe.Infrastructure.csproj" />
+    <ProjectReference Include="..\MusiMe.Application\MusiMe.Application.csproj" />
+    <ProjectReference Include="..\MusiMe.Domain\MusiMe.Domain.csproj" />
+    <ProjectReference Include="..\MusiMe.Common\MusiMe.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
