@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using MusiMe.Domain.Model;
-using MusiMe.Domain.Interface;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MusiMe.Infrastructure.Data.Context
 {
@@ -14,84 +12,14 @@ namespace MusiMe.Infrastructure.Data.Context
         public DbSet<Credential> credentials { get; set; }
         public DbSet<Playlistsong> playlistsongs { get; set; }
         
-        protected ModelBuilder? modelBuilder;
-        protected override void OnModelCreating(ModelBuilder _modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder = _modelBuilder;
-
-            #region credentials
-                setEntityId<Credential>();
-            #endregion credentials
-
-            #region user
-                setEntityId<User>();
-                EntityTypeBuilder<User> userModelBuilder = modelBuilder.Entity<User>();
-
-                // one - one relationship between the user and credentials
-                userModelBuilder
-                    .HasOne(u => u.Credential)
-                    .WithOne(c => c.User)
-                    .HasForeignKey<Credential>(c => c.UserId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired(false);
-
-                // one - one relationship between the user and channel
-                userModelBuilder
-                    .HasOne(u => u.Channel)
-                    .WithOne(c => c.User)
-                    .HasForeignKey<Channel>(u => u.UserId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired(false);
-
-            #endregion user
-
-            #region Channel
-                setEntityId<Channel>();
-
-                //one - many relationship for the channel and playlist
-                modelBuilder.Entity<Channel>()
-                    .HasMany(c => c.Playlists)
-                    .WithOne(p => p.Channel)
-                    .HasForeignKey(p => p.PlaylistOwnerId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired(false);
-
-            #endregion Channel
-
-            #region Song
-                setEntityId<Song>();
-
-                 modelBuilder.Entity<Song>()
-                    .HasMany(s => s.PlaylistSongs)
-                    .WithOne(ps => ps.Songs)
-                    .HasForeignKey(ps => ps.SongId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-            #endregion Song
-
-            #region Playlist
-                setEntityId<Playlist>();
-
-                 modelBuilder.Entity<Playlist>()
-                    .HasMany(p => p.PlaylistSongs)
-                    .WithOne(ps => ps.Playlists)
-                    .HasForeignKey(ps => ps.PlaylistId)
-                    .OnDelete(DeleteBehavior.Cascade);
-            #endregion Playlist
-
-            #region playlistSong
-            modelBuilder.Entity<Playlistsong>()
-                .HasKey(ps => new { ps.SongId, ps.PlaylistId });
-            #endregion playlistSong
+            modelBuilder.ApplyConfiguration(new EntityConfigurations.CredentialsConfiguration());
+            modelBuilder.ApplyConfiguration(new EntityConfigurations.UsersConfiguration());
+            modelBuilder.ApplyConfiguration(new EntityConfigurations.ChannelsConfiguration());
+            modelBuilder.ApplyConfiguration(new EntityConfigurations.SongsConfiguration());
+            modelBuilder.ApplyConfiguration(new EntityConfigurations.PlaylistsConfiguration());
+            modelBuilder.ApplyConfiguration(new EntityConfigurations.PlaylistSongsConfiguration());
         }
-
-        private void setEntityId<T>( bool IsRequired = true ) where T : IEntry
-        {
-            modelBuilder?.Entity<T>()
-                .Property(p => p.Id)
-                .IsRequired(required: IsRequired);
-        }
-
-
     }
 }
